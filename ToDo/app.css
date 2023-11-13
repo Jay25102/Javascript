@@ -1,0 +1,12 @@
+body {
+    background-color: aliceblue;
+    height: 100vh;
+}
+
+.strike {
+    text-decoration: line-through;
+}
+
+ul {
+    display: inline-block;
+}
