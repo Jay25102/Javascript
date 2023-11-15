@@ -1,3 +1,4 @@
+// solution is inelegant
 const form = document.querySelector("form");
 const list = document.querySelector("ul.toDoList");
 
