@@ -1,13 +1,31 @@
 const form = document.querySelector("form");
 const list = document.querySelector("ul.toDoList");
 
-if (!localStorage.getItem("listArr")) {
-    let listArr = [];
-    localStorage.setItem("listArr", JSON.stringify(listArr));
+// localStorage.clear();
+const listArr = JSON.parse(localStorage.getItem("todos")) || [];
+// retrieve saved todos
+for (let i = 0; i < listArr.length; i++) {
+    const newLi = document.createElement("li");
+    const newButton = document.createElement("button");
+    newLi.innerText = listArr[i].task;
+    newButton.setAttribute("class", "remove");
+    newButton.innerText = "remove";
+    newLi.append(newButton);
+    list.append(newLi);
 }
 
+// either remove a todo or strikethrough
 list.addEventListener("click", function(event) {
     if (event.target.tagName === "BUTTON") {
+        removeArr = JSON.parse(localStorage.getItem("todos"));
+        // remove the remove
+        for (let i = 0; i < removeArr.length; i++) {
+            if (event.target.parentElement.innerText === removeArr[i].task) {
+                removeArr.splice(i, 1);
+            }
+        }
+        console.log(event.target.parentElement.innerText);
+        console.log(removeArr);
         event.target.parentElement.remove();
     }
     else  if (event.target.tagName === "LI") {
@@ -15,6 +33,7 @@ list.addEventListener("click", function(event) {
     }
 });
 
+// create a new todo and add it as an object to array in localstorage?
 form.addEventListener("submit", function(event) {
     event.preventDefault();
     const inputForm = document.querySelector(".inputForm");
@@ -22,18 +41,17 @@ form.addEventListener("submit", function(event) {
     const newButton = document.createElement("button");
 
     newLi.innerText = inputForm.value;
+    listArr.push({task: newLi.innerText});
+    localStorage.setItem("todos", JSON.stringify(listArr));
+    console.log(JSON.parse(localStorage.getItem("todos")));
     newButton.setAttribute("class", "remove");
     newButton.innerText = "remove";
 
     newLi.append(newButton);
     list.append(newLi);
-
-    let tempArr = localStorage.getItem("listArr");
-    console.log("printing tempArr: " + tempArr);
-    // tempArr.push(inputForm.value);
-    // localStorage.setItem("listArr", JSON.stringify(tempArr));
-
     form.reset();
-});
 
-console.log(JSON.parse(localStorage.getItem("listArr")));
+    // listArr.push({task: newLi.innerText});
+    // localStorage.setItem("todos", JSON.stringify(listArr));
+    // console.log(JSON.parse(localStorage.getItem("todos")));
+});
