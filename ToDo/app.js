@@ -20,8 +20,9 @@ list.addEventListener("click", function(event) {
         removeArr = JSON.parse(localStorage.getItem("todos"));
         // remove the remove
         for (let i = 0; i < removeArr.length; i++) {
-            if (event.target.parentElement.innerText === removeArr[i].task) {
+            if (event.target.parentElement.innerText.replace('remove', '') === removeArr[i].task) {
                 removeArr.splice(i, 1);
+                localStorage.setItem("todos", JSON.stringify(removeArr));
             }
         }
         console.log(event.target.parentElement.innerText);
